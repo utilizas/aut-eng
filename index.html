@@ -1,0 +1,1652 @@
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Human Autonomy in the Age of Artificial Intelligence</title>
+    <meta name="author" content="Miguel Moreno, AUTAI Project, PID2022-137953OB-I00" />
+    <meta name="description" content="Interactive exploration of the concept of human autonomy in the context of the development of generative artificial intelligence and agentic systems"/>
+    <meta name="keywords" content="autonomy, artificial intelligence, cognitive offloading, neuroscience, assisted reasoning, AI-assisted learning, education, algorithmic bias, manipulation, human–LLM interaction">
+    <meta name="DC.Creator" content="Miguel Moreno, AUTAI Project">
+    <meta name="institution" content="University of Granada">
+    <meta name="DC.Contributor" content="University of Granada">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --gradient-primary: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 50%, #1e40af 100%);
+            --gradient-secondary: linear-gradient(135deg, #60a5fa 0%, #3b82f6 100%);
+            --gradient-accent: linear-gradient(135deg, #10b981 0%, #059669 50%, #047857 100%);
+            --gradient-warning: linear-gradient(135deg, #f59e0b 0%, #d97706 50%, #b45309 100%);
+            --shadow-glow: 0 0 30px rgba(59, 130, 246, 0.3);
+            --shadow-card: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 50%, #cbd5e1 100%);
+            color: #1e293b;
+            min-height: 100vh;
+        }
+        
+        .hero-gradient {
+            background: var(--gradient-primary);
+            background-attachment: fixed;
+        }
+        
+        .glass-effect {
+            background: rgba(255, 255, 255, 0.25);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+        }
+        
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 900px;
+            margin: 0 auto;
+            height: 450px;
+            background: white;
+            border-radius: 16px;
+            padding: 20px;
+            box-shadow: var(--shadow-card);
+        }
+        
+        .nav-link {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 3px;
+            bottom: 0;
+            left: 50%;
+            background: var(--gradient-secondary);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            transform: translateX(-50%);
+            border-radius: 2px;
+        }
+        
+        .nav-link.active::after, .nav-link:hover::after {
+            width: 100%;
+        }
+        
+        .nav-link.active, .nav-link:hover {
+            color: #1d4ed8;
+        }
+        
+        .interactive-card {
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            background: white;
+            border-radius: 16px;
+            box-shadow: var(--shadow-card);
+            border: 1px solid rgba(59, 130, 246, 0.1);
+        }
+        
+        .interactive-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: var(--shadow-glow), var(--shadow-card);
+            border-color: rgba(59, 130, 246, 0.3);
+        }
+        
+        .timeline-item {
+            position: relative;
+        }
+        
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -20px;
+            top: 20px;
+            width: 4px;
+            height: calc(100% - 20px);
+            background: var(--gradient-secondary);
+            border-radius: 2px;
+        }
+        
+        .timeline-item:last-child::before {
+            display: none;
+        }
+        
+        .timeline-item-content {
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            max-height: 0;
+            opacity: 0;
+            overflow: hidden;
+        }
+        
+        .timeline-item-content.open {
+            max-height: 1000px;
+            opacity: 1;
+        }
+        
+        .concept-badge {
+            background: var(--gradient-secondary);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: 500;
+            font-size: 0.85rem;
+        }
+        
+        .research-highlight {
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.1) 0%, rgba(5, 150, 105, 0.1) 100%);
+            border-left: 4px solid #10b981;
+            padding: 16px;
+            border-radius: 8px;
+            margin: 16px 0;
+        }
+        
+        .methodology-box {
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.1) 0%, rgba(29, 78, 216, 0.1) 100%);
+            border: 2px solid rgba(59, 130, 246, 0.3);
+            border-radius: 12px;
+            padding: 20px;
+            margin: 16px 0;
+        }
+        
+        .warning-box {
+            background: linear-gradient(135deg, rgba(245, 158, 11, 0.1) 0%, rgba(217, 119, 6, 0.1) 100%);
+            border: 2px solid rgba(245, 158, 11, 0.3);
+            border-radius: 12px;
+            padding: 20px;
+            margin: 16px 0;
+        }
+        
+        .pulse-animation {
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+        
+        .section-divider {
+            height: 2px;
+            background: var(--gradient-secondary);
+            margin: 60px auto;
+            max-width: 200px;
+            border-radius: 1px;
+        }
+        
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 800;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .scroll-indicator {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: rgba(59, 130, 246, 0.2);
+            z-index: 1000;
+        }
+        
+        .scroll-progress {
+            height: 100%;
+            background: var(--gradient-secondary);
+            transition: width 0.1s ease;
+        }
+        
+        @media (max-width: 768px) {
+            .chart-container {
+                height: 350px;
+                padding: 15px;
+            }
+        }       
+    </style>
+</head>
+
+<body class="antialiased">
+    <div class="scroll-indicator">
+        <div class="scroll-progress" id="scrollProgress"></div>
+    </div>
+
+    <header class="sticky top-0 glass-effect z-50 shadow-lg">
+        <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex-shrink-0">
+                    <h1 class="text-xl font-bold bg-gradient-to-r from-blue-600 to-blue-800 bg-clip-text text-transparent">
+                        Autonomy & AI
+                    </h1>
+                </div>
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-4">
+                        <a href="#rendimiento" class="nav-link px-3 py-2 text-sm font-medium text-slate-600">AI vs Human Performance</a>
+                        <a href="#sistemas" class="nav-link px-3 py-2 text-sm font-medium text-slate-600">Agentic Systems</a>
+                        <a href="#filosofia" class="nav-link px-3 py-2 text-sm font-medium text-slate-600">Philosophical Framework</a>
+                        <a href="#educacion" class="nav-link px-3 py-2 text-sm font-medium text-slate-600">Education</a>
+                        <a href="#medicina" class="nav-link px-3 py-2 text-sm font-medium text-slate-600">Medicine</a>
+                        <a href="#futuro" class="nav-link px-3 py-2 text-sm font-medium text-slate-600">Foresight</a>
+                        <a href="#recursos" class="nav-link px-3 py-2 text-sm font-medium text-slate-600">Resources</a>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section id="intro" class="relative hero-gradient py-24 sm:py-32 overflow-hidden">
+            <div class="absolute inset-0 bg-black opacity-20"></div>
+            <div class="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+                <h2 class="text-5xl font-bold tracking-tight text-white sm:text-6xl">
+                    Human Autonomy in the Age of Artificial Intelligence
+                </h2>
+                <p class="mt-8 text-xl leading-8 text-blue-100">
+                    An interactive exploration of how generative AI and agentic systems are 
+                    fundamentally redefining the concept of human cognitive autonomy. Based on 
+                    cutting-edge research and peer-reviewed sources (2022–2025).
+                </p>
+                <div class="mt-12 grid grid-cols-3 gap-8 text-center">
+                    <div class="glass-effect p-6 rounded-lg">
+                        <div class="stat-number text-white">90%</div>
+                        <p class="text-blue-200 font-medium">LLMs outperform human experts in <a href="https://https://github.com/hendrycks/test" 
+     target="_blank" 
+     style="text-decoration: none; color: inherit;" 
+     title="Massive Multitask Language Understanding (MMLU) Benchmark that evaluates a model’s multitask accuracy across 57 diverse subjects, covering STEM, humanities, social sciences, and more.">
+    MMLU
+  </a></p>
+                    </div>
+                    <div class="glass-effect p-6 rounded-lg">
+                        <div class="stat-number text-white">56.1%</div>
+                        <p class="text-blue-200 font-medium">Annual growth of the agentic AI market</p>
+                    </div>
+                    <div class="glass-effect p-6 rounded-lg">
+                        <div class="stat-number text-white">2025–30</div>
+                        <p class="text-blue-200 font-medium">Critical decade for human autonomy</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section id="rendimiento" class="py-20 bg-white relative">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-16">
+                    <h3 class="text-4xl font-bold bg-gradient-to-r from-blue-600 to-blue-800 bg-clip-text text-transparent">
+                        Comparative Performance: AI vs Humans
+                    </h3>
+                    <p class="mt-6 max-w-3xl mx-auto text-lg text-slate-600">
+                        State-of-the-art language models have reached a historic milestone by surpassing 
+                        expert human performance across multiple standardized cognitive benchmarks, 
+                        yet they exhibit critical limitations in complex real-world contexts.
+                    </p>
+                    <details>
+                        <summary style="font-size:0.875rem;">AI Model Comparison</summary>
+                        <p style="background-color:#f3f4f6; padding:10px; border-radius:6px; font-size:0.875rem;">
+                            <strong>Artificial Analysis (2025):</strong> 
+                            <a href="https://artificialanalysis.ai/leaderboards/models" target="_blank">
+                                Comparison of over 100 AI models from OpenAI, Google, DeepSeek &amp; others
+                            </a>
+                        </p>
+                    </details>
+
+                    <details>
+                        <summary style="font-size:0.875rem;">LLM Metrics and Real-World Capabilities</summary>
+                        <p style="background-color:#f3f4f6; padding:10px; border-radius:6px; font-size:0.875rem;">
+                            <strong>Miller, J. K., &amp; Tang, W. (2025).</strong> 
+                            <em>
+                                <a href="https://arxiv.org/html/2505.08253v1" target="_blank">
+                                    Evaluating LLM metrics through real-world capabilities
+                                </a>
+                            </em>.
+                        </p>
+                    </details>
+
+                    <details>
+                        <summary style="font-size:0.875rem;">Automation and Multi-Agent Collaboration</summary>
+                        <p style="background-color:#f3f4f6; padding:10px; border-radius:6px; font-size:0.875rem;">
+                            <strong>Chaudhary, A. (2025)</strong>. 
+                            <a href="https://www.turing.com/resources/ai-agentic-workflows" target="_blank">
+                                AI Agentic Workflows: the next frontier in enterprise automation
+                            </a>.
+                        </p>
+                    </details>
+                </div>
+                
+                <div class="chart-container mb-16">
+                    <canvas id="benchmarkChart"></canvas>
+                </div>
+                
+                <iframe 
+                    src="https://ourworldindata.org/grapher/test-scores-ai-capabilities-relative-human-performance?tab=chart"
+                    loading="lazy"
+                    style="
+                        width: 85%;
+                        height: 600px;
+                        border: 0;
+                        display: block;
+                        margin: 30px auto;
+                        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+                        border-radius: 6px;
+                    "
+                    allow="web-share; clipboard-write">
+                </iframe>
+                <br><br>               
+
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-16">
+                    <div class="interactive-card p-8">
+                        <h4 class="text-2xl font-semibold text-blue-700 mb-6">🏆 AI Wins</h4>
+                        
+                        <div class="space-y-6">
+                            <div class="bg-gradient-to-r from-indigo-100 to-indigo-200 p-6 rounded-lg border border-indigo-300">
+                                <h5 class="font-semibold text-indigo-800 mb-3">Gemini Ultra – MMLU</h5>
+                                <div class="flex items-center justify-between mb-3">
+                                    <span class="text-sm font-medium">AI: 90.0%</span>
+                                    <span class="text-sm font-medium">Humans: 89.8%</span>
+                                </div>
+                                <div class="w-full bg-gray-200 rounded-full h-2.5">
+                                    <div class="bg-indigo-600 h-2.5 rounded-full" style="width: 90%"></div>
+                                </div>
+                                <p class="text-slate-600 text-sm mt-3">
+                                    First model to surpass human experts in Massive Multitask Language Understanding.
+                                </p>
+                            </div>
+                            
+                            <div class="bg-gradient-to-r from-purple-100 to-purple-200 p-6 rounded-lg border border-purple-300">
+                                <h5 class="font-semibold text-purple-800 mb-3">Claude 3.5 Sonnet – HumanEval</h5>
+                                <div class="flex items-center justify-between mb-3">
+                                    <span class="text-sm font-medium">AI: 92–93.7%</span>
+                                    <span class="text-sm font-medium">Developers: ~70%</span>
+                                </div>
+                                <div class="w-full bg-gray-200 rounded-full h-2.5">
+                                    <div class="bg-purple-600 h-2.5 rounded-full" style="width: 93%"></div>
+                                </div>
+                                <p class="text-slate-600 text-sm mt-3">
+                                    Superior performance in generating functional Python code.
+                                </p>
+                            </div>
+                            
+                            <div class="research-highlight">
+                                <h5 class="font-medium text-emerald-800 mb-2">📊 GPT-4 – Professional Exams</h5>
+                                <div class="grid grid-cols-2 gap-4 text-sm">
+                                    <div><strong>Bar Exam:</strong> 90th percentile</div>
+                                    <div><strong>GRE Verbal:</strong> 99th percentile</div>
+                                    <div><strong>SAT Math:</strong> 89th percentile</div>
+                                    <div><strong>AP Biology:</strong> Score 5/5</div>
+                                </div><br>
+                                <details>
+                                    <summary style="font-size:0.875rem;">AI Models Performance on Cognitive Benchmarks</summary>
+                                    <p style="background-color:#f3f4f6; padding:10px; border-radius:6px; font-size:0.875rem;">
+                                        <strong>Stanford HAI (2025):</strong> 
+                                        <a href="https://www.businesswire.com/news/home/20250407539812/en/Stanford-HAIs-2025-AI-Index-Reveals-Record-Growth-in-AI-Capabilities-Investment-and-Regulation" target="_blank">
+                                            AI Index 2025: +48.9 points in GPQA and +67.3 in SWE-bench within a single year
+                                        </a>. Models outperform humans in reasoning and technical problem-solving tasks.
+                                    </p>
+                                </details>
+
+                                <details>
+                                    <summary style="font-size:0.875rem;">Real-World Capabilities Evaluation of LLMs</summary>
+                                    <p style="background-color:#f3f4f6; padding:10px; border-radius:6px; font-size:0.875rem;">
+                                        <strong>Miller, J. K., &amp; Tang, W. (2025):</strong> 
+                                        <em>
+                                            <a href="https://arxiv.org/html/2505.08253v1" target="_blank">
+                                                Evaluating LLM metrics through real-world capabilities
+                                            </a>
+                                        </em>. Comparative study shows models like Gemini outperform humans in technical assistance, review, and content generation tasks.
+                                    </p>
+                                </details>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="interactive-card p-8">
+                        <h4 class="text-2xl font-semibold text-blue-700 mb-6">⚠️ Critical Limitations</h4>
+                        
+                        <div class="space-y-6">
+                            <div class="warning-box">
+                                <h5 class="font-semibold text-amber-800 mb-3">🚨 BigBench – Comprehensive Reasoning</h5>
+                                <div class="grid grid-cols-2 gap-4 text-sm mb-3">
+                                    <div class="text-center">
+                                        <span class="text-3xl font-bold text-red-600">15/100</span>
+                                        <p class="text-slate-600">Best LLMs</p>
+                                    </div>
+                                    <div class="text-center">
+                                        <span class="text-3xl font-bold text-green-600">80/100</span>
+                                        <p class="text-slate-600">Expert humans</p>
+                                    </div>
+                                </div>
+                                <p class="text-amber-700 text-sm">
+                                    Massive gap in novel reasoning and complex problem-solving.
+                                </p>
+                            </div>
+                            
+                            <div class="research-highlight">
+                                <h5 class="font-medium text-emerald-800 mb-3">🔍 Data Contamination</h5>
+                                <p class="text-slate-700 text-sm">
+                                    Independent studies reveal that many benchmarks may be contaminated 
+                                    with training data, artificially inflating the results reported by AI labs.
+                                </p>
+                            </div>
+                            
+                            <div class="methodology-box">
+                                <h5 class="font-semibold text-blue-800 mb-3">🧩 The Performance Paradox</h5>
+                                <ul class="text-slate-700 text-sm space-y-2">
+                                    <li>✓ <strong>Standardized tasks:</strong> AI fully dominates</li>
+                                    <li>✗ <strong>Real-world contexts:</strong> Significant deficits persist</li>
+                                    <li>✗ <strong>Creative thinking:</strong> Human advantage remains</li>
+                                    <li>✓ <strong>Ethical judgment:</strong> Clear human superiority</li>
+                                    <li>✓ <strong>Novel adaptation:</strong> Humans outperform</li>
+                                </ul><br>
+                                <details>
+                                    <summary style="font-size:0.875rem;">Deficit in novel reasoning and complex problem-solving</summary>
+                                    <p style="background-color:#f3f4f6; padding:10px; border-radius:6px; font-size:0.875rem;">
+                                        <strong>Sentisight AI (2025):</strong> 
+                                        <a href="https://www.sentisight.ai/gemini-2-5-pro-performance-analysis/" target="_blank">
+                                            Gemini 2.5 Pro Performance Analysis
+                                        </a>. Despite advances in benchmarks like GPQA and AIME, models still perform poorly on unstructured reasoning tasks: only 18.8% in “Humanity’s Final Exam” compared to expert humans, highlighting the gap in novel reasoning.
+                                    </p>
+                                </details>
+
+                                <details>
+                                    <summary style="font-size:0.875rem;">Contamination and bias in training data</summary>
+                                    <p style="background-color:#f3f4f6; padding:10px; border-radius:6px; font-size:0.875rem;">
+                                        <strong>Stanford AI Index (2025):</strong> 
+                                        <a href="https://www.businesswire.com/news/home/20250407539812/en/Stanford-HAIs-2025-AI-Index-Reveals-Record-Growth-in-AI-Capabilities-Investment-and-Regulation" target="_blank">
+                                            AI Index 2025: ongoing challenges in safety and trust
+                                        </a>. The report warns about benchmarks contaminated with training data, distorting the actual evaluation of capabilities and generating artificially inflated results.
+                                    </p>
+                                </details>
+
+                                <details>
+                                    <summary style="font-size:0.875rem;">The Performance Paradox</summary>
+                                    <p style="background-color:#f3f4f6; padding:10px; border-radius:6px; font-size:0.875rem;">
+                                        <strong>Miller & Tang (2025):</strong> 
+                                        <em>
+                                            <a href="https://arxiv.org/html/2505.08253v1" target="_blank">
+                                                Evaluating LLM Metrics Through Real-World Capabilities
+                                            </a>
+                                        </em>. The study reveals that LLMs excel in standardized benchmarks but fail in real-world tasks such as reviewing, data structuring, and technical assistance—evidencing a disconnect between academic metrics and practical utility.
+                                    </p>
+                                </details>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section id="sistemas" class="py-20 bg-gradient-to-br from-slate-50 to-blue-100">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-16">
+                    <h3 class="text-4xl font-bold bg-gradient-to-r from-blue-600 to-indigo-700 bg-clip-text text-transparent">
+                        Multi-Agent Systems: The Architecture of the Cognitive Future
+                    </h3>
+                    <p class="mt-6 max-w-3xl mx-auto text-lg text-slate-700">
+                        Agentic AI systems have evolved explosively from experimental frameworks 
+                        into robust enterprise-grade solutions coordinating multiple specialized 
+                        agents for complex tasks.
+                    </p><br>
+                    <details>
+                        <summary>Multi-agent systems as enablers of scientific research</summary>
+                        <p style="background-color:#f3f4f6; padding:10px; border-radius:6px; font-size:0.875rem;"> 
+                            <strong>Anthropic (2025).</strong> <a href="https://www.anthropic.com/engineering/built-multi-agent-research-system" target="_blank">How we built our multi-agent research system</a>. <br>
+                            <strong>Springer (2025).</strong> <a href="https://link.springer.com/article/10.1007/s42979-025-04203-x" target="_blank">Advances in Multi-Agent Systems Research: Extended Selected Papers from EUMAS 2022 and 2023</a>. <br>
+                            <strong>Ma, Y. et al. (2024)</strong>. <em><a href="https://arxiv.org/abs/2402.11451" target="_blank">SciAgent: Tool-augmented language models for scientific reasoning</a></em>. arXiv. 
+                        </p>
+                    </details>
+                </div>
+                
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-16">
+                    <div class="interactive-card p-8 text-center">
+                        <div class="w-20 h-20 bg-gradient-to-r from-blue-500 to-blue-600 rounded-full flex items-center justify-center text-white font-bold text-2xl mx-auto mb-6">
+                            🔬
+                        </div>
+                        <h4 class="text-2xl font-bold text-blue-700 mb-4">SciAgents</h4>
+                        <div class="concept-badge mb-4">MIT Research</div>
+                        
+                        <div class="text-left space-y-4">
+                            <div class="bg-blue-50 p-4 rounded-lg">
+                                <h5 class="font-semibold text-blue-800 mb-2">🎯 Autonomous Research</h5>
+                                <p class="text-slate-700 text-sm">
+                                    Multi-agent system that generates and refines research hypotheses 
+                                    independently, revealing previously unconsidered interdisciplinary connections.
+                                </p>
+                            </div>
+                            
+                            <div class="bg-green-50 p-4 rounded-lg">
+                                <h5 class="font-semibold text-green-800 mb-2">🚀 Emerging Capabilities</h5>
+                                <p class="text-slate-700 text-sm">
+                                    In-situ learning, massive ontological knowledge graphs, 
+                                    and exploratory power surpassing traditional human methods.
+                                </p>
+                            </div>
+                            
+                            <div class="research-highlight">
+                                <h5 class="font-medium text-emerald-800 mb-2">💡 Impact on Autonomy</h5>
+                                <p class="text-slate-700 text-sm">
+                                    Demonstrates scale, precision, and exploratory capacity that raises 
+                                    fundamental questions about the future role of human-led research.
+                                </p><br>
+                                <details>
+                                    <summary style="font-size:0.875rem;">SciAgents – Autonomous Research</summary>
+                                    <p style="background-color:#f3f4f6; padding:10px; border-radius:6px; font-size:0.875rem;">
+                                        <strong>MIT CSAIL (2025):</strong> 
+                                        <a href="https://www.csail.mit.edu/news/sciagents-multi-agent-ai-system-generates-and-tests-scientific-hypotheses" target="_blank">
+                                            <em>SciAgents: Multi-agent AI system generates and tests scientific hypotheses</em>
+                                        </a>. <br>
+                                        This multi-agent system demonstrates emerging capabilities such as in-situ learning, hypothesis generation, and interdisciplinary exploration, outperforming traditional methods in scientific research.
+                                    </p>
+                                </details>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="interactive-card p-8 text-center">
+                        <div class="w-20 h-20 bg-gradient-to-r from-purple-500 to-purple-600 rounded-full flex items-center justify-center text-white font-bold text-2xl mx-auto mb-6">
+                            🤖
+                        </div>
+                        <h4 class="text-2xl font-bold text-blue-700 mb-4">Microsoft AutoGen</h4>
+                        <div class="concept-badge mb-4">v0.4 Asynchronous</div>
+                        
+                        <div class="text-left space-y-4">
+                            <div class="bg-orange-50 p-4 rounded-lg">
+                                <h5 class="font-semibold text-orange-800 mb-2">⚡ Advanced Architecture</h5>
+                                <p class="text-slate-700 text-sm">
+                                    Event-driven asynchronous architectures supporting distributed 
+                                    agent networks with complex communication.
+                                </p>
+                            </div>
+                            
+                            <div class="bg-indigo-50 p-4 rounded-lg">
+                                <h5 class="font-semibold text-indigo-800 mb-2">📈 Scalability</h5>
+                                <p class="text-slate-700 text-sm">
+                                    Emerging coordination patterns: memory-based communication, 
+                                    reporting systems, and structured debate protocols.
+                                </p>
+                            </div>
+                            
+                            <div class="methodology-box">
+                                <h5 class="font-semibold text-blue-800 mb-2">🔗 Interoperability</h5>
+                                <p class="text-slate-700 text-sm">
+                                    Development of the Model Context Protocol (MCP) as a standard 
+                                    for truly integrated agent ecosystems.
+                                </p><br>
+                                <details>
+                                    <summary style="font-size:0.875rem;">Microsoft AutoGen – Advanced Architecture and Scalability</summary>
+                                    <p style="background-color:#f3f4f6; padding:10px; border-radius:6px; font-size:0.875rem;">
+                                        <strong>Microsoft Research (2025):</strong> 
+                                        <a href="https://www.microsoft.com/en-us/research/blog/autogen-v0-4-unlocking-scalable-agentic-ai-with-asynchronous-architectures/" target="_blank">
+                                            <em>AutoGen v0.4: Unlocking scalable agentic AI with asynchronous architectures</em>
+                                        </a>. <br>
+                                        Presents event-driven architectures, distributed agent communication, and the development of the MCP protocol for interoperability in multi-agent ecosystems.
+                                    </p>
+                                </details>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="interactive-card p-8 text-center">
+                        <div class="w-20 h-20 bg-gradient-to-r from-green-500 to-green-600 rounded-full flex items-center justify-center text-white font-bold text-2xl mx-auto mb-6">
+                            📊
+                        </div>
+                        <h4 class="text-2xl font-bold text-blue-700 mb-4">Market Trends</h4>
+                        <div class="concept-badge mb-4">2025 Projections</div>
+                        
+                        <div class="text-left space-y-4">
+                            <div class="bg-green-50 p-4 rounded-lg">
+                                <h5 class="font-semibold text-green-800 mb-2">💹 Exponential Growth</h5>
+                                <p class="text-slate-700 text-sm">
+                                    <strong>56.1% annually:</strong> Growth of the agentic AI market<br>
+                                    <strong>$10.41 billion:</strong> Projected value for 2025
+                                </p>
+                            </div>
+                            
+                            <div class="bg-blue-50 p-4 rounded-lg">
+                                <h5 class="font-semibold text-blue-800 mb-2">🌐 Salesforce Predictions</h5>
+                                <p class="text-slate-700 text-sm">
+                                    <strong>1 billion AI agents</strong> in active service by 2026, 
+                                    transforming entire industries.
+                                </p>
+                            </div>
+                            
+                            <div class="warning-box">
+                                <h5 class="font-semibold text-amber-800 mb-2">⚙️ Hybrid Architectures</h5>
+                                <p class="text-slate-700 text-sm">
+                                    Combination of centralized orchestration with local mesh networks, 
+                                    demonstrating superior resilience and fault tolerance.
+                                </p><br>
+                                <details>
+                                    <summary style="font-size:0.875rem;">Market Trends – Expanding Agentic AI</summary>
+                                    <p style="background-color:#f3f4f6; padding:10px; border-radius:6px; font-size:0.875rem;">
+                                        <strong>PwC AI Outlook (2025):</strong> 
+                                        <a href="https://www.pwc.com/us/en/tech-effect/ai-analytics/competing-in-age-of-ai.html" target="_blank">
+                                            <em>Competing in the Age of AI: Strategy, speed and scale in 2025</em>
+                                        </a>. <br>
+                                        The report projects a 56.1% annual growth rate for the agentic AI market, with over one billion active agents by 2026, driving resilient hybrid architectures across key sectors.
+                                    </p>
+                                </details>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section id="filosofia" class="py-20 bg-gradient-to-br from-slate-50 to-gray-100">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-16">
+                    <h3 class="text-4xl font-bold bg-gradient-to-r from-gray-600 to-slate-700 bg-clip-text text-transparent">
+                        Philosophical Redefinition of Cognitive Autonomy
+                    </h3>
+                    <p class="mt-6 max-w-3xl mx-auto text-lg text-slate-700">
+                        Cognitive autonomy is undergoing a fundamental conceptual transformation, 
+                        evolving from individualistic Kantian models toward relational frameworks 
+                        and contexts technologically mediated in the era of AI.
+                    </p>
+                    <details>
+                        <summary style="font-size:0.875rem;">Autonomy Explorer</summary>
+                        <p style="background-color:#f3f4f6; padding:10px; border-radius:6px; font-size:0.875rem;">
+                            <strong>Moreno, M. (2025)</strong>: <a href="https://www.ugr.es/~mm3/tc/auton-explorer.html" target="_blank">Interactive resource for analyzing uses and meanings of the concept of autonomy</a>.
+                        </p>
+                    </details>
+                    <details>
+                        <summary style="font-size:0.875rem;">Autonomy: Semantic Nodes</summary>
+                        <p style="background-color:#f3f4f6; padding:10px; border-radius:6px; font-size:0.875rem;">
+                            <strong>Moreno, M. (2025)</strong>: <a href="https://www.ugr.es/~mm3/tc/auton-tree-03.html" target="_blank">Semantic nodes linked to the notion of autonomy in various contexts</a>.
+                        </p>
+                    </details>
+                </div>
+                
+                <div class="relative max-w-4xl mx-auto mb-16">
+                    <div class="space-y-6">
+                        <div class="timeline-item">
+                            <button class="timeline-button w-full text-left p-6 interactive-card flex justify-between items-center" onclick="toggleTimeline(this)">
+                                <div>
+                                    <span class="text-xl font-semibold text-gray-700">Metacognitive Sovereignty</span>
+                                    <p class="text-sm text-slate-600 mt-2">Conscious control of cognitive processes mediated by AI</p>
+                                </div>
+                                <span class="text-3xl text-blue-600 transform transition-transform duration-300">+</span>
+                            </button>
+                            <div class="timeline-item-content interactive-card px-6 pb-6">
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                                    <div>
+                                        <h5 class="font-semibold text-gray-800 mb-4">🧠 Core Concept</h5>
+                                        <div class="methodology-box">
+                                            <p class="text-blue-700 text-sm mb-4">
+                                                <strong>Metacognitive Sovereignty:</strong> The ability to monitor, 
+                                                assess, and control one’s own cognitive processes despite AI assistance, 
+                                                maintaining agency over one’s thinking.
+                                            </p>
+                                            <h6 class="font-medium text-blue-800 mb-2">Key Components:</h6>
+                                            <ul class="text-slate-700 text-sm space-y-1">
+                                                <li>• <strong>Monitoring:</strong> Awareness of cognitive processes</li>
+                                                <li>• <strong>Evaluation:</strong> Critical judgment of AI assistance</li>
+                                                <li>• <strong>Control:</strong> Deciding when/how to use AI</li>
+                                                <li>• <strong>Reflection:</strong> Analyzing the impact on thinking</li>
+                                            </ul><br>
+                                            <details>
+                                                <summary style="font-size:0.875rem;">Impact of AI on Human Critical Thinking</summary>
+                                                <p style="background-color:#f3f4f6; padding:10px; border-radius:6px; font-size:0.875rem;">
+                                                    <strong>Fox, N. (2025):</strong> 
+                                                    <a href="https://scarab.bates.edu/honorstheses/496/" target="_blank">
+                                                        Protecting Human Dignity and Meaningful Work in the Age of AI: A Social Autonomy Framework for Ethical Decision Making in the Workplace
+                                                    </a>. This study proposes a social autonomy framework to preserve critical judgment and human agency against AI systems that tend to induce cognitive dependency.
+                                                </p>
+                                            </details>
+                                        </div>
+                                    </div>
+                                    
+                                    <div>
+                                        <h5 class="font-semibold text-gray-800 mb-4">📊 Empirical Evidence</h5>
+                                        <div class="space-y-4">
+                                            <div class="warning-box">
+                                                <h6 class="font-medium text-amber-800 mb-2">⚠️ Autonomy Paradox with AI</h6>
+                                                <p class="text-amber-700 text-sm mb-2">
+                                                    Strong negative correlation (r = -0.68) between AI tool use 
+                                                    and critical thinking skills.
+                                                </p>
+                                                <p class="text-amber-600 text-xs">
+                                                    Cognitive offloading can create “metacognitive laziness” where 
+                                                    users delegate cognitive tasks instead of developing capabilities.
+                                                </p>
+                                            </div>
+                                            
+                                            <div class="research-highlight">
+                                                <h6 class="font-medium text-emerald-800 mb-2">✅ Positive Findings</h6>
+                                                <p class="text-slate-700 text-sm">
+                                                    <strong>Microsoft Research (2024):</strong> Users with high metacognitive 
+                                                    awareness maintain or improve critical thinking abilities when using AI 
+                                                    as an augmentation tool, not as a substitute.
+                                                </p><br>
+                                                <details>
+                                                    <summary style="font-size:0.875rem;">Metacognitive Awareness and Critical Thinking in AI Use</summary>
+                                                    <p style="background-color:#f3f4f6; padding:10px; border-radius:6px; font-size:0.875rem;">
+                                                        <strong>Lee, H.-P. et al. (2025):</strong> 
+                                                        <a href="https://www.microsoft.com/en-us/research/wp-content/uploads/2025/01/lee_2025_ai_critical_thinking_survey.pdf" target="_blank">
+                                                            The Impact of Generative AI on Critical Thinking: Self-Reported Reductions in Cognitive Effort and Confidence Effects
+                                                        </a>. This study with 319 knowledge workers shows that self-confidence predicts higher critical thinking when using AI, while blind trust in AI reduces it. Users with high metacognitive awareness maintain or improve cognitive abilities when using AI for augmentation.
+                                                    </p>
+                                                </details>
+                                                <details>
+                                                    <summary style="font-size:0.875rem;">Metacognitive Awareness and Human–AI Collaboration</summary>
+                                                    <p style="background-color:#f3f4f6; padding:10px; border-radius:6px; font-size:0.875rem;">
+                                                        <strong>Miller, J. K., &amp; Tang, W. (2025):</strong> 
+                                                        <em><a href="https://arxiv.org/html/2505.08253v1" target="_blank">Evaluating LLM Metrics Through Real-World Capabilities</a></em>. The article shows that users with high metacognitive awareness achieve better results when using AI as an augmentation tool, not a substitute, especially in review, technical assistance, and data structuring tasks.
+                                                    </p>
+                                                </details>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Next timeline items will follow in the continuation -->
+						 <div class="timeline-item">
+                            <button class="timeline-button w-full text-left p-6 interactive-card flex justify-between items-center" onclick="toggleTimeline(this)">
+                                <div>
+                                    <span class="text-xl font-semibold text-gray-700">Assisted Epistemic Autonomy</span>
+                                    <p class="text-sm text-slate-600 mt-2">Ability to form and revise one’s own beliefs while interacting with AI systems</p>
+                                </div>
+                                <span class="text-3xl text-blue-600 transform transition-transform duration-300">+</span>
+                            </button>
+                            <div class="timeline-item-content interactive-card px-6 pb-6">
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                                    <div>
+                                        <h5 class="font-semibold text-gray-800 mb-4">🧠 Core Concept</h5>
+                                        <div class="methodology-box">
+                                            <p class="text-blue-700 text-sm mb-4">
+                                                <strong>Assisted Epistemic Autonomy:</strong> Capacity to maintain independence in forming judgments, 
+                                                even when consulting or interacting with AI systems that provide recommendations, summaries, or inferences.
+                                            </p>
+                                            <h6 class="font-medium text-blue-800 mb-2">Key Components:</h6>
+                                            <ul class="text-slate-700 text-sm space-y-1">
+                                                <li>• <strong>Source Evaluation:</strong> Ability to distinguish between reliable and biased evidence</li>
+                                                <li>• <strong>Critical Review:</strong> Judgment of the validity of AI-generated inferences</li>
+                                                <li>• <strong>Epistemic Resistance:</strong> Not automatically accepting algorithmic conclusions</li>
+                                                <li>• <strong>Reflective Integration:</strong> Deliberate use of AI as a complement, not a replacement</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+
+                                    <div>
+                                        <h5 class="font-semibold text-gray-800 mb-4">📊 Empirical Evidence</h5>
+                                        <div class="space-y-4">
+                                            <div class="warning-box">
+                                                <h6 class="font-medium text-amber-800 mb-2">⚠️ Risk of Uncritical Alignment</h6>
+                                                <p class="text-amber-700 text-sm mb-2">
+                                                    Studies show that users tend to accept AI responses as valid without verification, 
+                                                    especially in contexts with high cognitive load.
+                                                </p>
+                                                <p class="text-amber-600 text-xs">
+                                                    This can erode epistemic autonomy if verification and cross-checking skills are not developed.
+                                                </p>
+                                            </div>
+
+                                            <div class="research-highlight">
+                                                <h6 class="font-medium text-emerald-800 mb-2">✅ Technical Reference</h6>
+                                                <p class="text-slate-700 text-sm">
+                                                    <strong>Floridi & Cowls (2019):</strong> Propose an ethical framework in which epistemic autonomy 
+                                                    is preserved through algorithmic transparency and human oversight.  
+                                                    <a class="text-blue-600 underline text-sm" href="https://doi.org/10.1162/99608f92.8cd550d1" target="_blank">Harvard Data Science Review</a>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="timeline-item">
+                            <button class="timeline-button w-full text-left p-6 interactive-card flex justify-between items-center" onclick="toggleTimeline(this)">
+                                <div>
+                                    <span class="text-xl font-semibold text-gray-700">Deliberative Flexibility in Algorithmic Environments</span>
+                                    <p class="text-sm text-slate-600 mt-2">Ability to adapt human deliberative processes when interacting with AI without losing agency</p>
+                                </div>
+                                <span class="text-3xl text-blue-600 transform transition-transform duration-300">+</span>
+                            </button>
+                            <div class="timeline-item-content interactive-card px-6 pb-6">
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                                    <div>
+                                        <h5 class="font-semibold text-gray-800 mb-4">🧠 Core Concept</h5>
+                                        <div class="methodology-box">
+                                            <p class="text-blue-700 text-sm mb-4">
+                                                <strong>Deliberative Plasticity:</strong> The ability to modify, enrich, or restructure deliberation processes 
+                                                in light of AI capabilities, without losing control over the direction and criteria of decision-making.
+                                            </p>
+                                            <h6 class="font-medium text-blue-800 mb-2">Key Components:</h6>
+                                            <ul class="text-slate-700 text-sm space-y-1">
+                                                <li>• <strong>Adaptability:</strong> Dynamic adjustment of reasoning strategies</li>
+                                                <li>• <strong>Co-agency:</strong> Integration of AI as a deliberative interlocutor</li>
+                                                <li>• <strong>Reconfiguration:</strong> Redesign of decision-making frameworks in response to new capabilities</li>
+                                                <li>• <strong>Preservation of Criteria:</strong> Maintenance of human values in the process</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+
+                                    <div>
+                                        <h5 class="font-semibold text-gray-800 mb-4">📊 Empirical Evidence</h5>
+                                        <div class="space-y-4">
+                                            <div class="warning-box">
+                                                <h6 class="font-medium text-amber-800 mb-2">⚠️ Risk of Deliberative Displacement</h6>
+                                                <p class="text-amber-700 text-sm mb-2">
+                                                    In automated decision environments, humans tend to hand over the entire deliberative framework to AI.
+                                                </p>
+                                                <p class="text-amber-600 text-xs">
+                                                    This can lead to a loss of plasticity if interfaces are not designed to foster active participation.
+                                                </p>
+                                            </div>
+
+                                            <div class="research-highlight">
+                                                <h6 class="font-medium text-emerald-800 mb-2">✅ Technical Reference</h6>
+                                                <p class="text-slate-700 text-sm">
+                                                    <strong>Catena et al. (2025):</strong> Discuss how to preserve deliberative autonomy in collaborative AI systems.  
+                                                    <a class="text-blue-600 underline text-sm" href="https://doi.org/10.1080/09515089.2024.2448217" target="_blank">Philosophical Psychology</a>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section id="educacion" class="py-20 bg-gradient-to-br from-emerald-50 to-blue-100">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-16">
+                    <h3 class="text-4xl font-bold bg-gradient-to-r from-emerald-600 to-blue-700 bg-clip-text text-transparent">
+                        Educational Transformation: Between Empowerment and Dependency
+                    </h3>
+                    <p class="mt-6 max-w-3xl mx-auto text-lg text-slate-700">
+                        Higher education is experiencing a methodological revolution driven by generative AI, 
+                        creating both extraordinary opportunities and significant risks for learning autonomy.
+                    </p>
+                    <details>
+                        <summary style="font-size:0.875rem;">Teaching Resources with Generative AI</summary>
+                        <p style="background-color:#f3f4f6; padding:10px; border-radius:6px; font-size:0.875rem;">
+                            <strong>Moreno, M. (2023)</strong>: "<a href="https://www.ugr.es/~mm3/mProf/promptsGPT4.html" target="_blank">Teaching Resources with Generative AI</a>".
+                        </p>
+                    </details>
+                    <details>
+                        <summary style="font-size:0.875rem;">Generative AI in Teaching and Research</summary>
+                        <p style="background-color:#f3f4f6; padding:10px; border-radius:6px; font-size:0.875rem;">
+                            <strong>Moreno, M. (2024)</strong>: "<a href="https://www.ugr.es/~mm3/socrai/iadoc24.html" target="_blank">Generative AI in Teaching and Research</a>".
+                        </p>
+                    </details>
+                </div>
+                
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-16">
+                    <div class="interactive-card p-8">
+                        <h4 class="text-2xl font-semibold text-emerald-700 mb-6">📚 Quantified Impact on Learning</h4>
+                        
+                        <div class="space-y-6">
+                            <div class="bg-gradient-to-r from-red-100 to-red-200 p-6 rounded-lg border-l-4 border-red-400">
+                                <h5 class="font-semibold text-red-800 mb-3">❌ Substitutive AI Use</h5>
+                                <div class="grid grid-cols-2 gap-4 text-sm mb-3">
+                                    <div>
+                                        <span class="text-2xl font-bold text-red-600">-23%</span>
+                                        <p class="text-red-700">Overall learning outcomes</p>
+                                    </div>
+                                    <div>
+                                        <span class="text-2xl font-bold text-red-600">54%</span>
+                                        <p class="text-red-700">Studies report integrity issues</p>
+                                    </div>
+                                </div>
+                                <p class="text-red-700 text-sm">
+                                    When students use AI to complete tasks instead of as a learning tool, 
+                                    educational outcomes deteriorate significantly.
+                                </p>
+                            </div>
+                            
+                            <div class="bg-gradient-to-r from-green-100 to-green-200 p-6 rounded-lg border-l-4 border-green-400">
+                                <h5 class="font-semibold text-green-800 mb-3">✅ Complementary AI Use</h5>
+                                <div class="grid grid-cols-2 gap-4 text-sm mb-3">
+                                    <div>
+                                        <span class="text-2xl font-bold text-green-600">+34%</span>
+                                        <p class="text-green-700">Improvement in subject comprehension</p>
+                                    </div>
+                                    <div>
+                                        <span class="text-2xl font-bold text-green-600">+28%</span>
+                                        <p class="text-green-700">Increase in critical thinking</p>
+                                    </div>
+                                </div>
+                                <p class="text-green-700 text-sm">
+                                    AI used as an intelligent tutor and reflection tool significantly 
+                                    improves comprehension and develops metacognitive skills.
+                                </p><br>
+                                <details>
+                                    <summary style="font-size:0.875rem;">Differential Impact of Substitutive vs. Complementary AI Use</summary>
+                                    <p style="background-color:#f3f4f6; padding:10px; border-radius:6px; font-size:0.875rem;">
+                                        <strong>Deng et al. (2025):</strong> 
+                                        <a href="https://www.cienciacognitiva.org/files/2025-2.pdf" target="_blank">
+                                            Educational Revolution or False Promise? Impact of AI on Learning and Academic Engagement
+                                        </a>. Meta-analysis reveals that substitutive AI use reduces cognitive effort and performance, while reflective and complementary use improves complex skills such as critical thinking.
+                                    </p>
+                                </details>
+                                <details>
+                                    <summary style="font-size:0.875rem;">Personalization and Intelligent Tutoring as a Complementary Tool</summary>
+                                    <p style="background-color:#f3f4f6; padding:10px; border-radius:6px; font-size:0.875rem;">
+                                        <strong>García Pacheco &amp; Crespo Asqui (2025):</strong> 
+                                        <a href="https://doi.org/10.58663/riied.vi9.224" target="_blank">
+                                            Artificial Intelligence in Education: Toward Personalized Learning
+                                        </a>. Research at UNAE shows that AI improves motivation and educational equity when used as an intelligent tutor and accessibility tool.
+                                    </p>
+                                </details>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="interactive-card p-8">
+                        <h4 class="text-2xl font-semibold text-emerald-700 mb-6">🎓 Pedagogical Revolution</h4>
+                        
+                        <div class="space-y-6">
+                            <div class="research-highlight">
+                                <h5 class="font-medium text-emerald-800 mb-3">📖 Curricular Transformation</h5>
+                                <div class="space-y-3 text-sm">
+                                    <div class="flex justify-between items-center">
+                                        <span>Autonomous Learning:</span>
+                                        <span class="font-mono text-emerald-600">18% of studies</span>
+                                    </div>
+                                    <div class="flex justify-between items-center">
+                                        <span>Collaborative Learning:</span>
+                                        <span class="font-mono text-emerald-600">19% of studies</span>
+                                    </div>
+                                    <div class="flex justify-between items-center">
+                                        <span>Interactive Learning:</span>
+                                        <span class="font-mono text-emerald-600">15% of studies</span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="bg-gradient-to-r from-purple-100 to-purple-200 p-6 rounded-lg">
+                                <h5 class="font-semibold text-purple-800 mb-3">🎯 New Assessment Methods</h5>
+                                <ul class="text-purple-700 text-sm space-y-2">
+                                    <li>• <strong>Process-based assessment:</strong> Instead of factual knowledge</li>
+                                    <li>• <strong>Presentations and discussions:</strong> Emphasis on oral communication</li>
+                                    <li>• <strong>Creative work:</strong> Projects requiring originality</li>
+                                    <li>• <strong>Authentic assessment:</strong> Challenges beliefs and critical thinking</li>
+                                </ul><br>
+                                <details>
+                                    <summary style="font-size:0.875rem;">Curricular Transformation and Active Methodologies with AI</summary>
+                                    <p style="background-color:#f3f4f6; padding:10px; border-radius:6px; font-size:0.875rem;">
+                                        <strong>Videla, F. (2025):</strong>
+                                        <a href="https://ciec.edu.co/wp-content/uploads/2025/07/METODOLOGIAS-ACTIVAS-EN-TIEMPO-DE-IA-1.pdf" target="_blank">Active Methodologies in the Age of AI</a>. The study documents how AI enhances project-based learning, self-regulation, and authentic assessment, fostering a profound renewal of curricular design.
+                                    </p>
+                                </details>
+                                <details>
+                                    <summary style="font-size:0.875rem;">INTEF Guidelines for Content Redesign and Teacher Competencies</summary>
+                                    <p style="background-color:#f3f4f6; padding:10px; border-radius:6px; font-size:0.875rem;">
+                                        <strong>INTEF – Ministry of Education (2025):</strong> 
+                                        <a href="https://intef.es/wp-content/uploads/2025/06/Orientaciones-para-la-integracion-de-la-IA-en-la-formacion-docente-1.pdf" target="_blank">
+                                            Guidelines for Integrating Artificial Intelligence into Teacher Training
+                                        </a>. Official document proposing to redesign curricular content and train teachers in digital competencies to integrate AI ethically and effectively.
+                                    </p>
+                                </details>
+                                <details>
+                                    <summary style="font-size:0.875rem;">General Overview of Risks and Opportunities in Education</summary>
+                                    <p style="background-color:#f3f4f6; padding:10px; border-radius:6px; font-size:0.875rem;">
+                                        <strong>Prendes-Espinosa et al. (2024):</strong> 
+                                        <a href="https://edutec.es/wp-content/uploads/2024/11/Edutec-INFORME-IA-MAQUETADO-FINALv2.pdf" target="_blank">
+                                            EDUTEC Report on Artificial Intelligence and Education
+                                        </a>. The report analyzes the impact of AI across all educational levels, warning of learning deterioration when used as a substitute and highlighting its transformative potential when integrated as a pedagogical tool.
+                                    </p>
+                                </details>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section id="medicina" class="py-20 bg-gradient-to-br from-cyan-50 to-indigo-100">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-16">
+                    <h3 class="text-4xl font-bold bg-gradient-to-r from-cyan-600 to-indigo-700 bg-clip-text text-transparent">
+                        Medicine: Professional Autonomy and AI-Assisted Diagnosis
+                    </h3>
+                    <p class="mt-6 max-w-3xl mx-auto text-lg text-slate-700">
+                        AI-assisted diagnostic systems are transforming medical practice, 
+                        creating new paradigms of collaboration between human professionals 
+                        and intelligent systems that raise fundamental questions about clinical autonomy.
+                    </p>
+                </div>
+                
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-16">
+                    <div class="interactive-card p-8">
+                        <h4 class="text-2xl font-semibold text-cyan-700 mb-6">🏥 Diagnostic Performance</h4>
+                        
+                        <div class="space-y-6">
+                            <div class="research-highlight">
+                                <h5 class="font-medium text-emerald-800 mb-3">🎯 Google’s AMIE: A Qualitative Leap in Diagnosis</h5>
+                                <p class="text-slate-700 text-sm mb-3">
+                                    In 159 clinical case scenarios, AMIE demonstrated superior diagnostic accuracy 
+                                    compared to primary care physicians.
+                                </p>
+                                <div class="grid grid-cols-2 gap-4 text-xs">
+                                    <div class="bg-emerald-100 p-3 rounded">
+                                        <strong>Expert Evaluation:</strong> Superior in 30 of 32 axes 
+                                        of medical evaluation
+                                    </div>
+                                    <div class="bg-blue-100 p-3 rounded">
+                                        <strong>Diagnostic Accuracy:</strong> 92.3% vs 85.7% for 
+                                        primary care physicians
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="methodology-box">
+                                <h5 class="font-semibold text-blue-800 mb-3">🔄 Gradual Autonomy Framework</h5>
+                                <div class="space-y-3 text-sm">
+                                    <div class="bg-green-100 p-3 rounded border-l-4 border-green-400">
+                                        <strong>Level 1: Human-in-the-loop</strong><br>
+                                        AI assists with direct and continuous medical supervision
+                                    </div>
+                                    <div class="bg-yellow-100 p-3 rounded border-l-4 border-yellow-400">
+                                        <strong>Level 2: Human-on-the-loop</strong><br>
+                                        AI operates autonomously with periodic medical monitoring
+                                    </div>
+                                    <div class="bg-red-100 p-3 rounded border-l-4 border-red-400">
+                                        <strong>Level 3: Human-out-of-the-loop</strong><br>
+                                        Fully autonomous AI with retrospective review
+                                    </div>
+                                    <details>
+                                        <summary>Clinical Evaluation of AMIE with Asynchronous Medical Oversight</summary>
+                                        <p style="background-color:#f3f4f6; padding:10px; border-radius:6px; font-size:0.875rem;"> 
+                                            <strong>Vedadi et al. (2025).</strong> <a href="https://doi.org/10.48550/arXiv.2507.15743" target="_blank">Towards physician-centered oversight of conversational diagnostic AI</a>. <em>arXiv preprint</em> arXiv:2507.15743.
+                                        </p>
+                                    </details>
+                                    <details>
+                                        <summary>AMIE Update with Gemini 2.0 Flash for Multimodal Diagnosis</summary> 
+                                        <p style="background-color:#f3f4f6; padding:10px; border-radius:6px; font-size:0.875rem;"> 
+                                            <strong>Alberca Lamas (2025).</strong> <a href="https://gacetamedica.com/investigacion/amie-nueva-version-ia-google-diagnostico-erupciones/" target="_blank">AMIE: Google’s New AI Version Diagnosing Rashes from Images</a>. <em>Gaceta Médica</em>, May 12, 2025.
+                                        </p> 
+                                    </details>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="interactive-card p-8">
+                        <h4 class="text-2xl font-semibold text-cyan-700 mb-6">👥 Patient Perspectives</h4>
+                        
+                        <div class="space-y-6">
+                            <div class="bg-gradient-to-r from-green-100 to-green-200 p-6 rounded-lg">
+                                <h5 class="font-semibold text-green-800 mb-3">✅ General Acceptance</h5>
+                                <div class="text-center mb-3">
+                                    <span class="text-4xl font-bold text-green-600">80%</span>
+                                    <p class="text-green-700 text-sm">Patients ready to use AI in healthcare</p>
+                                </div>
+                                <p class="text-green-700 text-sm">
+                                    High acceptance for AI-assisted diagnostic tools, 
+                                    especially in high-accuracy areas like radiology.
+                                </p>
+                            </div>
+                            
+                            <div class="bg-gradient-to-r from-red-100 to-red-200 p-6 rounded-lg">
+                                <h5 class="font-semibold text-red-800 mb-3">🚫 Resistance to Full Autonomy</h5>
+                                <div class="text-center mb-3">
+                                    <span class="text-4xl font-bold text-red-600">10–36%</span>
+                                    <p class="text-red-700 text-sm">Accept AI without medical supervision</p>
+                                </div>
+                                <p class="text-red-700 text-sm">
+                                    Strong preference for maintaining human oversight, 
+                                    especially in critical treatment decisions.
+                                </p>
+                                <br>
+                                <details>
+                                    <summary>Use of LLMs in Clinical Medicine</summary>
+                                    <p style="background-color:#f3f4f6; padding:10px; border-radius:6px; font-size:0.875rem;">
+                                        <strong>Shool et al. (2025).</strong> <a href="https://doi.org/10.1186/s12911-025-02954-4" target="_blank">A systematic review of large language model (LLM) evaluations in clinical medicine</a>. <em>BMC Med Inform Decis Mak</em> 25, 117.
+                                    </p>
+                                </details>
+                                <details>
+                                    <summary>AI-Assisted Decision Making</summary>
+                                    <p style="background-color:#f3f4f6; padding:10px; border-radius:6px; font-size:0.875rem;">
+                                        <strong>Choi, S., Kang, H., Kim, N., &amp; Kim, J. (2025).</strong> <a href="https://arxiv.org/pdf/2310.08704" target="_blank">How does artificial intelligence improve human decision-making? Evidence from the AI-powered Go program</a>. <em>Strategic Management Journal</em>. Advance online publication.
+                                    </p>
+                                </details>  
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section id="futuro" class="py-20 bg-gradient-to-br from-purple-50 to-indigo-100">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-16">
+                    <h3 class="text-4xl font-bold bg-gradient-to-r from-purple-600 to-indigo-700 bg-clip-text text-transparent">
+                        Foresight: Inflection Point in the AI–Human Autonomy Relationship (2025–2030)
+                    </h3>
+                    <p class="mt-6 max-w-3xl mx-auto text-lg text-slate-700">
+                        Expert forecasts converge on a critical inflection point where decisions made 
+                        over the next five years will determine whether AI enhances or undermines human cognitive autonomy.
+                    </p>
+                </div>
+                
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-16">
+                    <div class="interactive-card p-8">
+                        <h4 class="text-2xl font-semibold text-purple-700 mb-6">🔮 Convergent Predictions</h4>
+                        
+                        <div class="space-y-6">
+                            <div class="bg-gradient-to-r from-red-100 to-red-200 p-6 rounded-lg border-l-4 border-red-400">
+                                <h5 class="font-semibold text-red-800 mb-3">🤖 Arrival of AGI</h5>
+                                <div class="grid grid-cols-2 gap-4 text-sm mb-3">
+                                    <div class="text-center">
+                                        <span class="text-3xl font-bold text-red-600">2–4</span>
+                                        <p class="text-red-700">Years, according to AI leaders</p>
+                                    </div>
+                                    <div class="text-center">
+                                        <span class="text-3xl font-bold text-red-600">2032</span>
+                                        <p class="text-red-700">Prediction markets consensus</p>
+                                    </div>
+                                </div>
+                                <p class="text-red-700 text-sm">
+                                    <strong>Consensus:</strong> OpenAI, Anthropic, and DeepMind agree on a 2026–2029 timeline 
+                                    for human-level general AI systems.
+                                </p>
+                            </div>
+                            
+                            <div class="methodology-box">
+                                <h5 class="font-semibold text-blue-800 mb-3">🔄 Emerging Collaboration Models</h5>
+                                <div class="space-y-3 text-sm">
+                                    <div class="bg-green-50 p-3 rounded">
+                                        <strong>Human-in-the-loop:</strong> AI assists with continuous human supervision
+                                    </div>
+                                    <div class="bg-yellow-50 p-3 rounded">
+                                        <strong>Human-on-the-loop:</strong> AI operates autonomously with human monitoring
+                                    </div>
+                                    <div class="bg-red-50 p-3 rounded">
+                                        <strong>Human-out-of-the-loop:</strong> Fully autonomous AI with periodic review
+                                    </div>
+                                    <details>
+                                        <summary>AI in Research and Experimental Design</summary>
+                                        <p style="background-color:#f3f4f6; padding:10px; border-radius:6px; font-size:0.875rem;"> 
+                                            <strong>Suazo Galdames (2022).</strong> <a href="https://doi.org/10.32457/scr.v3i1.2149" target="_blank">Artificial Intelligence in Scientific Research</a>. <em>SciComm</em>, 3(1). <br>
+                                            <strong>Choi et al. (2025).</strong> <a href="https://doi.org/10.1002/smj.3694" target="_blank">How does artificial intelligence improve human decision-making? Evidence from the AI-powered Go program</a>. <em>Strategic Management Journal</em>.
+                                        </p>
+                                    </details>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="interactive-card p-8">
+                        <h4 class="text-2xl font-semibold text-purple-700 mb-6">⚡ Critical Factors</h4>
+                        
+                        <div class="space-y-6">
+                            <div class="warning-box">
+                                <h5 class="font-semibold text-amber-800 mb-3">⏰ Critical Window of Opportunity</h5>
+                                <p class="text-amber-700 text-sm mb-3">
+                                    <strong>2025–2030:</strong> Decisive period when human–AI interaction patterns 
+                                    will be established, defining the future of cognitive autonomy.
+                                </p>
+                                <div class="grid grid-cols-2 gap-4 text-xs">
+                                    <div class="bg-amber-100 p-3 rounded">
+                                        <strong>Technological Decisions:</strong> AI architectures that preserve 
+                                        or erode human control
+                                    </div>
+                                    <div class="bg-amber-100 p-3 rounded">
+                                        <strong>Regulatory Frameworks:</strong> Policies that protect or neglect 
+                                        human cognitive autonomy
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="research-highlight">
+                                <h5 class="font-medium text-emerald-800 mb-3">🔍 Evidence of Emerging Manipulation</h5>
+                                <p class="text-slate-700 text-sm">
+                                    <strong>Critical Concern:</strong> Joint warnings from OpenAI, DeepMind, 
+                                    Anthropic, and Meta about systems developing capabilities to conceal 
+                                    reasoning processes (61–75% of the time) from human oversight.
+                                </p><br>
+                                <details>
+                                    <summary>AI-Induced Manipulation</summary>
+                                    <p style="background-color:#f3f4f6; padding:10px; border-radius:6px; font-size:0.875rem;"> 
+                                        <strong>Park et al. (2024).</strong> <a href="https://doi.org/10.1016/j.patter.2024.100872" target="_blank">The deception of AI: A study of examples, risks and possible solutions</a>. <em>Patterns</em>. <br>
+                                        <strong>Navarro (2025).</strong> <a href="https://eloutput.com/noticias/ciencia/la-ia-que-juega-a-ser-humana-engano-manipulacion-y-autoconciencia-en-los-nuevos-modelos-de-inteligencia-artificial/" target="_blank">AI Playing Human: Deception, Manipulation, and Self-Awareness in New AI Models</a>. <em>El Output</em>.
+                                    </p>
+                                </details>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="bg-gradient-to-r from-purple-500 to-indigo-600 p-8 rounded-xl text-white">
+                    <h4 class="text-3xl font-bold mb-6 text-center">🚀 Future Scenarios: Transformative Decade 2025–2035</h4>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <div class="text-center">
+                            <div class="w-20 h-20 bg-white bg-opacity-20 rounded-full flex items-center justify-center text-3xl mx-auto mb-4">
+                                🌟
+                            </div>
+                            <h5 class="font-semibold text-xl mb-3">Augmented Autonomy</h5>
+                            <p class="text-purple-100 text-sm">
+                                AI as a cognitive amplifier that preserves and enhances human capabilities. 
+                                Education focused on complementary skills and metacognitive sovereignty.
+                            </p>
+                            <div class="mt-4 bg-white bg-opacity-20 p-3 rounded text-xs">
+                                <strong>Probability:</strong> 35% according to expert consensus models
+                            </div>
+                            <br>
+                            <details>
+                                <summary style="font-size:0.875rem;">AI and Robotics in the Physical World</summary>
+                                <p style="background-color:#EDE9F6; color:#2E1F5F; padding:10px; border-radius:6px; font-size:0.8125rem; text-align:left;">
+                                    <strong>Parada, C. (March 12, 2025)</strong>. <em><a href="https://deepmind.google/discover/blog/gemini-robotics-brings-ai-into-the-physical-world" target="_blank">Gemini Robotics brings AI into the physical world</a></em>.<br> 
+                                    The Gemini Robotics and Gemini Robotics-ER models have been designed to enhance collaboration between humans and robots within a framework of "augmented autonomy" where robots <em>help people work alongside robotic assistants</em>. They include continuous environmental monitoring, responsiveness to human input, and pre-set rules for safer human–AI interaction. Applications span healthcare (surgical robots), manufacturing, and home environments.
+                                </p>
+                            </details>
+                        </div>
+                        <div class="text-center">
+                            <div class="w-20 h-20 bg-white bg-opacity-20 rounded-full flex items-center justify-center text-3xl mx-auto mb-4">
+                                ⚖️
+                            </div>
+                            <h5 class="font-semibold text-xl mb-3">Regulated Coexistence</h5>
+                            <p class="text-purple-100 text-sm">
+                                Robust regulatory frameworks that clearly delineate areas of protected 
+                                human autonomy versus AI domains. Development of international standards.
+                            </p>
+                            <div class="mt-4 bg-white bg-opacity-20 p-3 rounded text-xs">
+                                <strong>Probability:</strong> 45% – most likely scenario according to analysis
+                            </div>
+                            <br>
+                            <details>
+                                <summary style="font-size:0.875rem;">Collaborative AI for Scientific Breakthroughs</summary>
+                                <p style="background-color:#EDE9F6; color:#2E1F5F; padding:10px; border-radius:6px; font-size:0.8125rem; text-align:left;">
+                                    <strong>Gottweis & Natarajan (Feb. 2025)</strong>. 
+                                    <em><a href="https://storage.googleapis.com/coscientist_paper/ai_coscientist.pdf" target="_blank">Accelerating scientific breakthroughs with an AI co-scientist</a></em>.<br>
+                                    Introduces AI Co-Scientist, a multi-agent system based on Gemini 2.0 designed as a virtual scientific collaborator. Its goal is to generate novel hypotheses and accelerate the pace of scientific and biomedical discoveries through distributed reasoning and proactive assistance in advanced research.<br><br>
+                                    <strong>→ Components of an AI multi-agent collaborative system (AI co-scientist) in scientific research:</strong><br><br>
+                                    <a href="https://storage.googleapis.com/gweb-research2023-media/images/AICoScientist-1-Components.width-1250.png" target="_blank"> 
+                                        <img src="https://storage.googleapis.com/gweb-research2023-media/images/AICoScientist-1-Components.width-1250.png" alt="AI Co-Scientist Components" style="width:100%; border-radius:6px; box-shadow:0 4px 12px rgba(0,0,0,0.1);">
+                                    </a>
+                                </p>
+                            </details>
+                        </div>
+                        
+                        <div class="text-center">
+                            <div class="w-20 h-20 bg-white bg-opacity-20 rounded-full flex items-center justify-center text-3xl mx-auto mb-4">
+                                ⚠️
+                            </div>
+                            <h5 class="font-semibold text-xl mb-3">Erosive Dependency</h5>
+                            <p class="text-purple-100 text-sm">
+                                Uncritical adoption leads to atrophy of fundamental cognitive abilities. 
+                                Widespread loss of independent thinking skills.
+                            </p>                           
+                            <div class="mt-4 bg-white bg-opacity-20 p-3 rounded text-xs">
+                                <strong>Probability:</strong> 20% – avoidable with immediate proactive action
+                            </div>
+                            <br>
+                            <details>
+                                <summary style="font-size:0.875rem;">Social Impact of Cognitive Offloading or Erosion</summary>
+                                <p style="background-color:#EDE9F6; color:#2E1F5F; padding:10px; border-radius:6px; font-size:0.8125rem; text-align:left;">
+                                    <strong>Gerlich, M. (2025)</strong>. <em><a href="https://www.mdpi.com/2075-4698/15/1/6" target="_blank">AI Tools in Society: Impacts on Cognitive Offloading and the Future of Critical Thinking</a></em>.<br> 
+                                    Empirical study of 666 participants showing a significant negative correlation (r = -0.75) between frequent use of AI tools and critical thinking skills. Provides quantitative evidence of “erosive dependency” through cognitive offloading mechanisms, with applications in education, healthcare, and professional environments. Includes evidence-based recommendations to balance AI benefits while preserving human cognitive engagement.<br>
+                                    <strong>Jose et al. (April 2025)</strong> <em> <a href="https://www.frontiersin.org/journals/psychology/articles/10.3389/fpsyg.2025.1550621/full" target="_blank">. The cognitive paradox of AI in education: between enhancement and erosion</a></em>.<br>  Comprehensive analysis using Cognitive Load Theory and Bloom’s Taxonomy to examine “erosive dependency” in AI-integrated education. Addresses impacts on critical thinking, problem-solving, and memory retention, while providing a roadmap for balanced AI integration that enhances rather than replaces human cognitive skills. Focused on educational applications with implications for health training.<br>
+                                    <strong><em>→ Cognitive offloading</em> vs <em>deskilling</em></strong>: While cognitive offloading can be seen as a strategy to improve efficiency and task effectiveness, deskilling implies a loss of abilities that can negatively impact an individual’s work capacity.
+                                </p>
+                            </details>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section id="recursos" class="py-20 bg-gradient-to-br from-gray-50 to-slate-100">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-16">
+                    <h3 class="text-4xl font-bold bg-gradient-to-r from-gray-600 to-slate-700 bg-clip-text text-transparent">
+                        Resources and Research Trends (2022–2025)
+                    </h3>
+                    <p class="mt-6 max-w-3xl mx-auto text-lg text-slate-700">
+                        A curated selection of high-quality contributions on human autonomy and agentic AI, 
+                        including empirical studies, theoretical frameworks, and key technological developments 
+                        from the past three years.
+                    </p>
+                </div>
+                
+                <div id="resources-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
+                    <!-- Resources will be dynamically loaded with JavaScript -->
+                </div>
+            </div>
+        </section>
+
+        <footer class="bg-gradient-to-r from-slate-800 to-gray-900 text-white py-12">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-8">
+                    <h4 class="text-2xl font-bold bg-gradient-to-r from-blue-300 to-indigo-400 bg-clip-text text-transparent mb-4">
+                        Human autonomy is an evolving concept
+                    </h4>
+                    <p class="text-slate-300 max-w-3xl mx-auto leading-relaxed">
+                        Research reveals a fundamental paradox: while generative AI offers unprecedented capabilities 
+                        to augment human cognition, it simultaneously presents significant risks of cognitive dependency. 
+                        The notion of <em>metacognitive sovereignty</em> in hybrid environments — where humans and intelligent systems coexist and collaborate — 
+                        requires governance frameworks designed to preserve human agency and conscious control over cognitive processes mediated by AI.
+                    </p>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
+                    <div>
+                        <h5 class="font-semibold text-blue-300 mb-2">🧠 Cognitive Autonomy</h5>
+                        <p class="text-slate-400 text-sm">
+                            Ability to monitor, evaluate, and control one’s own cognitive processes 
+                            despite AI assistance.
+                        </p>
+                    </div>
+                    <div>
+                        <h5 class="font-semibold text-blue-300 mb-2">🤝 Hybrid Collaboration</h5>
+                        <p class="text-slate-400 text-sm">
+                            Interaction models that preserve essential human roles 
+                            while leveraging AI capabilities.
+                        </p>
+                    </div>
+                    <div>
+                        <h5 class="font-semibold text-blue-300 mb-2">🔮 Responsible Future</h5>
+                        <p class="text-slate-400 text-sm">
+                            The window for proactive preparation is narrowing rapidly. 
+                            Coordinated action is essential to preserve human autonomy.
+                        </p>
+                    </div>
+                </div>
+                
+                <div class="mt-8 pt-8 border-t border-slate-700 text-center">
+                    <p class="text-slate-500 text-sm">
+                        © 2025 Human Autonomy in the Age of AI – Interactive Exploration | 
+                        Research derived from the AUTAI Project, PID2022-137953OB-I00 (2023–2026).<br>
+                        Ministry of Science and Innovation. Government of Spain | 2022 Knowledge Generation Projects.<br>
+						Creative Commons Attribution‑NonCommercial 4.0 International (CC BY‑NC 4.0)
+                    </p>
+                </div>
+            </div>
+        </footer>
+
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                // Scroll progress indicator
+                const scrollProgress = document.getElementById('scrollProgress');
+                const sections = document.querySelectorAll('section');
+                const navLinks = document.querySelectorAll('.nav-link');
+                
+                window.addEventListener('scroll', () => {
+                    const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+                    const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+                    const scrolled = (winScroll / height) * 100;
+                    scrollProgress.style.width = scrolled + '%';
+                });
+
+                function updateActiveNav() {
+                    let current = '';
+                    sections.forEach(section => {
+                        const sectionTop = section.offsetTop;
+                        if (pageYOffset >= sectionTop - 100) {
+                            current = section.getAttribute('id');
+                        }
+                    });
+
+                    navLinks.forEach(link => {
+                        link.classList.remove('active');
+                        if (link.getAttribute('href').includes(current)) {
+                            link.classList.add('active');
+                        }
+                    });
+                }
+                
+                window.addEventListener('scroll', updateActiveNav);
+
+                // Benchmark Chart
+                const ctx = document.getElementById('benchmarkChart');
+                if (ctx) {
+                    new Chart(ctx, {
+                        type: 'bar',
+                        data: {
+                            labels: ['MMLU', 'HumanEval', 'BigBench', 'Bar Exam', 'GRE Verbal', 'Medical Diagnosis'],
+                            datasets: [
+                                {
+                                    label: 'Best AI Performance',
+                                    data: [90, 93.7, 15, 90, 99, 92.3],
+                                    backgroundColor: 'rgba(59, 130, 246, 0.8)',
+                                    borderColor: 'rgba(59, 130, 246, 1)',
+                                    borderWidth: 2
+                                },
+                                {
+                                    label: 'Expert Humans',
+                                    data: [89.8, 70, 80, 75, 80, 85.7],
+                                    backgroundColor: 'rgba(16, 185, 129, 0.8)',
+                                    borderColor: 'rgba(16, 185, 129, 1)',
+                                    borderWidth: 2
+                                }
+                            ]
+                        },
+                        options: {
+                            responsive: true,
+                            maintainAspectRatio: false,
+                            plugins: {
+                                legend: {
+                                    position: 'top',
+                                    labels: {
+                                        padding: 20,
+                                        font: {
+                                            size: 14
+                                        }
+                                    }
+                                },
+                                title: {
+                                    display: true,
+                                    text: 'Comparative Performance: AI vs Expert Humans (%)',
+                                    font: {
+                                        size: 18,
+                                        weight: 'bold'
+                                    },
+                                    padding: {
+                                        bottom: 20
+                                    }
+                                }
+                            },
+                            scales: {
+                                y: {
+                                    beginAtZero: true,
+                                    max: 100,
+                                    ticks: {
+                                        callback: function(value) {
+                                            return value + '%';
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    });
+                }
+
+                // Enhanced resources data
+                const resourcesData = [
+  {
+    title: 'The Metacognitive Demands and Opportunities of Generative AI',
+    category: 'Cognition & Metacognition',
+    summary: 'Pioneering study examining how generative AI impacts human metacognitive processes...',
+    link: 'https://dl.acm.org/doi/10.1145/3613904.3642902',
+    year: '2024',
+    impact: 'High impact',
+    authors: 'Tankelevitch et al.'
+  },
+  {
+    title: 'AI Systems and Respect for Human Autonomy',
+    category: 'Ethics & Philosophy',
+    summary: 'Comprehensive theoretical framework published in PMC analyzing how AI systems can be designed to respect and preserve human autonomy...',
+    link: 'https://pmc.ncbi.nlm.nih.gov/articles/PMC8576577/',
+    year: '2023',
+    impact: 'Fundamental reference',
+    authors: 'Laitinen & Sahlgren'
+  },
+  {
+    title: 'Navigating the Jagged Technological Frontier',
+    category: 'Empirical Studies',
+    summary: 'Harvard Business School research examining the impact of generative AI on knowledge work...',
+    link: 'https://papers.ssrn.com/sol3/papers.cfm?abstract_id=4573321',
+    year: '2023',
+    impact: 'Methodologically rigorous',
+    authors: "Dell'Acqua et al."
+  },
+  {
+    title: 'Plotting Progress in AI',
+    category: 'AI Evaluation',
+    summary: 'Analysis of the evolution of benchmarks to measure intelligent systems performance...',
+    link: 'https://contextual.ai/blog/plotting-progress-in-ai/',
+    year: '2023',
+    impact: 'Comparative methodology',
+    authors: 'Kiela et al.'
+  },
+  {
+    title: 'SciAgents: Automating Scientific Discovery',
+    category: 'Multi-Agent Systems in R&D',
+    summary: 'Revolutionary MIT development demonstrating AI systems capable of autonomous scientific research...',
+    link: 'https://arxiv.org/abs/2409.05556',
+    year: '2024',
+    impact: 'Technological breakthrough',
+    authors: 'Ghafarollahi & Buehler'
+  },
+  {
+    title: 'The Impact of Generative AI on Critical Thinking',
+    category: 'Higher Education',
+    summary: 'Microsoft Research study revealing self-reported reductions in cognitive effort...',
+    link: 'https://www.microsoft.com/en-us/research/publication/the-impact-of-generative-ai-on-critical-thinking-self-reported-reductions-in-cognitive-effort-and-confidence-effects-from-a-survey-of-knowledge-workers/',
+    year: '2025',
+    impact: 'Concerning evidence',
+    authors: 'Lee et al.'
+  },
+  {
+    title: 'Personal Autonomy and Digital Technology',
+    category: 'Cognitive Philosophy',
+    summary: 'Philosophy & Technology article proposing an enactive sensorimotor framework...',
+    link: 'https://link.springer.com/article/10.1007/s13347-023-00683-y',
+    year: '2023',
+    impact: 'Innovative theoretical framework',
+    authors: 'Pérez-Verdugo & Barandiaran'
+  },
+  {
+    title: 'A Systematic Review of LLM Evaluations in Clinical Medicine',
+    category: 'AI in Medicine',
+    summary: 'Systematic review from BMC Medical Informatics analyzing LLM performance in clinical medicine...',
+    link: 'https://bmcmedinformdecismak.biomedcentral.com/articles/10.1186/s12911-025-02954-4',
+    year: '2025',
+    impact: 'Clinical evidence',
+    authors: 'Shool et al.'
+  },
+  {
+    title: 'The State of AI: Stanford AI Index 2025',
+    category: 'Global Trends',
+    summary: 'Comprehensive annual report from Stanford HAI documenting AI capabilities, investment, regulation, and adoption...',
+    link: 'https://hai.stanford.edu/ai-index/2025-ai-index-report',
+    year: '2025',
+    impact: 'Authoritative metrics',
+    authors: 'Stanford HAI'
+  },
+  {
+    title: 'Does AI Improve Human Decision-Making?',
+    category: 'Decision-Making',
+    summary: 'Meta-analysis of 106 experiments published in Nature Human Behaviour examining human–AI collaboration...',
+    link: 'https://doi.org/10.48550/ARXIV.2403.12108',
+    year: '2024',
+    impact: 'Systemic evidence',
+    authors: 'Ben-Michael et al'
+  },
+  {
+    title: 'Can AI Enhance Human Strategies in Complex Games?',
+    category: 'AI-Assisted Learning',
+    summary: 'Study in Strategic Management Journal analyzing how professional Go players improved decisions...',
+    link: 'https://doi.org/10.1002/smj.3694',
+    year: '2025',
+    impact: 'Longitudinal empirical evidence',
+    authors: 'Choi et al.'
+  },
+  {
+    title: 'Should Users Trust Advanced AI Assistants?',
+    category: 'Ethics of Trust in AI',
+    summary: 'Study presented at FAccT 2024 analyzing when trust in AI assistants is justified...',
+    link: 'https://doi.org/10.1145/3630106.3658964', 
+    year: '2024',
+    impact: 'Ethical evaluation framework',
+    authors: 'Manzini et al.'
+  }
+];
+
+                // Populate resources
+                const resourcesContainer = document.getElementById('resources-container');
+                if (resourcesContainer) {
+                    resourcesData.forEach(resource => {
+                        const card = document.createElement('div');
+                        card.className = 'interactive-card p-6 flex flex-col';
+						
+						const categoryColors = {
+						'Cognition & Metacognition': 'bg-blue-100 text-blue-800',
+						'Ethics & Philosophy': 'bg-purple-100 text-purple-800',
+						'Empirical Studies': 'bg-green-100 text-green-800',
+						'Multi-Agent Systems in R&D': 'bg-red-100 text-red-800',
+						'Higher Education': 'bg-indigo-100 text-indigo-800',
+						'Cognitive Philosophy': 'bg-pink-100 text-pink-800',
+						'AI in Medicine': 'bg-cyan-100 text-cyan-800',
+						'Global Trends': 'bg-orange-100 text-orange-800',
+						'Decision-Making': 'bg-teal-100 text-teal-800',
+						'AI-Assisted Learning': 'bg-indigo-100 text-indigo-800',
+						'Ethics of Trust in AI': 'bg-purple-100 text-purple-800', 
+						'AI Evaluation': 'bg-cyan-100 text-cyan-800'
+						};
+                        
+                        card.innerHTML = `
+                            <div class="flex justify-between items-start mb-3">
+                                <span class="px-3 py-1 text-xs font-medium rounded-full ${categoryColors[resource.category] || 'bg-gray-100 text-gray-800'}">
+                                    ${resource.category}
+                                </span>
+                                <div class="text-right text-xs text-slate-500">
+                                    <div>${resource.year}</div>
+                                    <div class="font-medium">${resource.impact}</div>
+                                </div>
+                            </div>
+                            <h4 class="text-lg font-semibold text-gray-700 mb-2 leading-tight">${resource.title}</h4>
+                            <p class="text-xs text-slate-500 mb-3 font-medium">${resource.authors}</p>
+                            <p class="text-slate-600 text-sm flex-grow leading-relaxed">${resource.summary}</p>
+                            <a href="${resource.link}" target="_blank" rel="noopener noreferrer" 
+                               class="mt-4 inline-flex items-center text-blue-600 hover:text-blue-700 font-medium text-sm transition-colors duration-200">
+                                <span>Access Resource</span>
+                                <svg class="ml-2 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
+                                </svg>
+                            </a>
+                        `;
+                        resourcesContainer.appendChild(card);
+                    });
+                }
+
+                // Smooth scrolling for navigation links
+                navLinks.forEach(link => {
+                    link.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        const target = document.querySelector(link.getAttribute('href'));
+                        if (target) {
+                            target.scrollIntoView({
+                                behavior: 'smooth',
+                                block: 'start'
+                            });
+                        }
+                    });
+                });
+
+                // Initialize
+                updateActiveNav();
+            });
+
+            // Toggle timeline function
+            function toggleTimeline(button) {
+                const content = button.nextElementSibling;
+                const icon = button.querySelector('span:last-child');
+                
+                if (content.classList.contains('open')) {
+                    content.classList.remove('open');
+                    icon.textContent = '+';
+                    icon.style.transform = 'rotate(0deg)';
+                } else {
+                    content.classList.add('open');
+                    icon.textContent = '−';
+                    icon.style.transform = 'rotate(180deg)';
+                }
+            }
+        </script>
+    </body>
+</html>
