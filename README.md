@@ -48,6 +48,12 @@ You are free to share and adapt the material for non‑commercial purposes, prov
 - **Spanish version:** _<a href="https://github.com/utilizas/aut" target="_blank">aut</a>_
 - **English version (this repo):** `aut-eng`
 
+## 🔗 Links & Status
+
+* [![GitHub Repo](https://img.shields.io/badge/GitHub-aut--eng-black?logo=github)](https://github.com/utilizas/aut-eng.git)
+* [![Vercel Deployment](https://img.shields.io/badge/Vercel-aut--eng.vercel.app-black?logo=vercel)](https://aut-eng.vercel.app/)
+* [![Netlify Deployment](https://img.shields.io/badge/Netlify-aut--eng.netlify.app-00C7B7?logo=netlify)](https://aut-eng.netlify.app/)
+
 ---
 
 
