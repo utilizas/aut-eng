@@ -57,7 +57,6 @@ You are free to share and adapt the material for non‑commercial purposes, prov
 ```plaintext
 .
 ├── index.html           # Main HTML file (English version)
-├── /assets              # CSS, JS, and media files
 ├── README.md            # This file
 └── LICENSE              # CC BY-NC 4.0 International
 ```
