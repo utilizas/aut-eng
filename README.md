@@ -24,8 +24,8 @@ It integrates:
 
 ## 🌐 Live Deployment
 
-- **Netlify:** _TBD after deployment_  
-- **Vercel:** _TBD after deployment_  
+- **Netlify:** _<a href="https://aut-eng.netlify.app" target="_blank">https://aut-eng.netlify.app</a>_  
+- **Vercel:** _<a href="https://aut-eng.vercel.app" target="_blank">https://aut-eng.vercel.app</a>_  
 
 > 💡 *Tip*: If you are running both Spanish and English versions, keep each in its own folder (`/es`, `/en`) or in separate repositories to avoid accidental overwrites during deployment.
 
