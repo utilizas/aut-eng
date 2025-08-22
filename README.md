@@ -1,2 +1,72 @@
-# aut-eng
-Human Autonomy in the Age of Artificial Intelligence - AUTAI Project
+# Human Autonomy in the Age of Artificial Intelligence
+
+**Interactive Research Exploration**  
+Version: English (`aut-eng`)  
+Derived from the AUTAI Project (PID2022‑137953OB‑I00)  
+Funded by the Spanish Ministry of Science and Innovation (2023‑2026)
+
+---
+
+## 📖 Overview
+
+This repository hosts the **English‑language** version of the interactive resource *Human Autonomy in the Age of Artificial Intelligence*.  
+The site examines how **generative AI** and **agentic systems** are reshaping the concept of **human cognitive autonomy**.
+
+It integrates:
+
+- **Empirical findings** from cognitive performance benchmarks comparing humans and LLMs.
+- **Theoretical frameworks** from philosophy, cognitive science, and AI ethics.
+- **Quantitative analyses** of AI adoption trends in domains such as education, medicine, governance, and R&D.
+- **Dynamic visualisations** and interactive elements for data exploration.
+- **Curated bibliographic resources** (2022–2025) linking to peer‑reviewed literature.
+
+---
+
+## 🌐 Live Deployment
+
+- **Netlify:** _TBD after deployment_  
+- **Vercel:** _TBD after deployment_  
+
+> 💡 *Tip*: If you are running both Spanish and English versions, keep each in its own folder (`/es`, `/en`) or in separate repositories to avoid accidental overwrites during deployment.
+
+---
+
+## 🏛 Institutional Details
+
+- **Lead Institution:** University of Granada (Spain)  
+- **Project:** AUTAI — *Autonomía Humana en la Era de la Inteligencia Artificial*  
+- **Grant Code:** PID2022‑137953OB‑I00  
+- **Funding Programme:** Spanish Ministry of Science and Innovation, Knowledge Generation Projects 2022  
+- **Project page:** <a href="https://gettecugr.es/" target="_blank">https://gettecugr.es/</a>
+
+## 📜 License
+
+This content is licensed under the **Creative Commons Attribution‑NonCommercial 4.0 International (CC BY‑NC 4.0)**.  
+You are free to share and adapt the material for non‑commercial purposes, provided attribution is given.
+
+---
+
+## 🔗 Related Repositories
+
+- **Spanish version:** _<a href="https://github.com/utilizas/aut" target="_blank">aut</a>_
+- **English version (this repo):** `aut-eng`
+
+---
+
+
+## 📂 Repository Structure
+
+```plaintext
+.
+├── index.html           # Main HTML file (English version)
+├── /assets              # CSS, JS, and media files
+├── README.md            # This file
+└── LICENSE              # CC BY-NC 4.0 International
+```
+
+---
+
+## 📜 License
+
+This content is licensed under the **Creative Commons Attribution‑NonCommercial 4.0 International (CC BY‑NC 4.0)**.  
+You are free to share and adapt the material for non‑commercial purposes, provided attribution is given.
