@@ -2,22 +2,21 @@
 
 **Interactive Research Exploration**  
 Version: English (`aut-eng`)  
-Derived from the AUTAI Project (PID2022‑137953OB‑I00)  
-Funded by the Spanish Ministry of Science and Innovation (2023‑2026)
+Derived from the AUTAI Project (PID2022‑137953OB‑I00)  | 2023‑2026
 
 ---
 
 ## 📖 Overview
 
 This repository hosts the **English‑language** version of the interactive resource *Human Autonomy in the Age of Artificial Intelligence*.  
-The site examines how **generative AI** and **agentic systems** are reshaping the concept of **human cognitive autonomy**.
+The site explores how **generative AI** and **agentic systems** are reshaping the concept of **human cognitive autonomy**.
 
 It integrates:
 
 - **Empirical findings** from cognitive performance benchmarks comparing humans and LLMs.
 - **Theoretical frameworks** from philosophy, cognitive science, and AI ethics.
 - **Quantitative analyses** of AI adoption trends in domains such as education, medicine, governance, and R&D.
-- **Dynamic visualisations** and interactive elements for data exploration.
+- **Dynamic visualisations** and interactive elements are used to explore data and literature.
 - **Curated bibliographic resources** (2022–2025) linking to peer‑reviewed literature.
 
 ---
