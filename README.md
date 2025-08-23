@@ -24,7 +24,7 @@ It integrates:
 - Includes reviewed references from reliable and up-to-date sources.
 - A final section showcases high-impact publications for further exploration.
 
-## Technologies
+## 🛠️ Technologies
 
 - HTML5, CSS3, vanilla JavaScript
 - TailwindCSS – Responsive styling.
@@ -35,11 +35,6 @@ It integrates:
 - GitHub – Version control and repositories (ES and EN).
 - Vercel – Deployment of the website in a production environment.
 - Netlify – Alternative/mirror deployment.
-
-## 🌐 Live Deployment
-
-- **Netlify:** _<a href="https://aut-eng.netlify.app" target="_blank">https://aut-eng.netlify.app</a>_  
-- **Vercel:** _<a href="https://aut-eng.vercel.app" target="_blank">https://aut-eng.vercel.app</a>_  
 
 ## 🏛 Institutional Details
 
@@ -54,7 +49,12 @@ It integrates:
 - **Spanish version:** _<a href="https://github.com/utilizas/aut" target="_blank">aut</a>_
 - **English version (this repo):** `aut-eng`
 
-## 🔗 Links & Status
+## 🌐 Live Deployment
+
+- **Netlify:** _<a href="https://aut-eng.netlify.app" target="_blank">https://aut-eng.netlify.app</a>_  
+- **Vercel:** _<a href="https://aut-eng.vercel.app" target="_blank">https://aut-eng.vercel.app</a>_  
+
+## 🌐 Hosting & Status
 
 * [![GitHub Repo](https://img.shields.io/badge/GitHub-aut--eng-black?logo=github)](https://github.com/utilizas/aut-eng.git)
 * [![Vercel Deployment](https://img.shields.io/badge/Vercel-aut--eng.vercel.app-black?logo=vercel)](https://aut-eng.vercel.app/)
