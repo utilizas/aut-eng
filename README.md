@@ -62,6 +62,13 @@ It integrates:
 
 ---
 
+## 📜 License
+
+This content is licensed under the **Creative Commons Attribution‑NonCommercial 4.0 International (CC BY‑NC 4.0)**.  
+You are free to share and adapt the material for non‑commercial purposes, provided attribution is given.
+
+---
+
 ## 📂 Repository Structure
 
 ```plaintext
@@ -70,10 +77,3 @@ It integrates:
 ├── README.md            # This file
 └── LICENSE              # CC BY-NC 4.0 International
 ```
-
----
-
-## 📜 License
-
-This content is licensed under the **Creative Commons Attribution‑NonCommercial 4.0 International (CC BY‑NC 4.0)**.  
-You are free to share and adapt the material for non‑commercial purposes, provided attribution is given.
