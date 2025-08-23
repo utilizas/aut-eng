@@ -19,14 +19,27 @@ It integrates:
 - **Dynamic visualisations** and interactive elements are used to explore data and literature.
 - **Curated bibliographic resources** (2022–2025) linking to peer‑reviewed literature.
 
----
+## 📚 Sources and Documentation
+
+- Includes reviewed references from reliable and up-to-date sources.
+- A final section showcases high-impact publications for further exploration.
+
+## Technologies
+
+- HTML5, CSS3, vanilla JavaScript
+- TailwindCSS – Responsive styling.
+- Chart.js – Data visualizations.
+- Browser / HTML inspector – Structure and resource review.
+- Markdown – Documentation and README.
+- Shields.io – Custom badges for GitHub, Vercel, and Netlify.
+- GitHub – Version control and repositories (ES and EN).
+- Vercel – Deployment of the website in a production environment.
+- Netlify – Alternative/mirror deployment.
 
 ## 🌐 Live Deployment
 
 - **Netlify:** _<a href="https://aut-eng.netlify.app" target="_blank">https://aut-eng.netlify.app</a>_  
 - **Vercel:** _<a href="https://aut-eng.vercel.app" target="_blank">https://aut-eng.vercel.app</a>_  
-
----
 
 ## 🏛 Institutional Details
 
@@ -35,13 +48,6 @@ It integrates:
 - **Grant Code:** PID2022‑137953OB‑I00  
 - **Funding Programme:** Spanish Ministry of Science and Innovation, Knowledge Generation Projects 2022  
 - **Project page:** <a href="https://gettecugr.es/" target="_blank">https://gettecugr.es/</a>
-
-## 📜 License
-
-This content is licensed under the **Creative Commons Attribution‑NonCommercial 4.0 International (CC BY‑NC 4.0)**.  
-You are free to share and adapt the material for non‑commercial purposes, provided attribution is given.
-
----
 
 ## 🔗 Related Repositories
 
@@ -56,7 +62,6 @@ You are free to share and adapt the material for non‑commercial purposes, prov
 
 ---
 
-
 ## 📂 Repository Structure
 
 ```plaintext
@@ -66,3 +71,9 @@ You are free to share and adapt the material for non‑commercial purposes, prov
 └── LICENSE              # CC BY-NC 4.0 International
 ```
 
+---
+
+## 📜 License
+
+This content is licensed under the **Creative Commons Attribution‑NonCommercial 4.0 International (CC BY‑NC 4.0)**.  
+You are free to share and adapt the material for non‑commercial purposes, provided attribution is given.
